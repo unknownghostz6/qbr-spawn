@@ -1,4 +1,4 @@
-local QBCore = exports['qb-core']:GetCoreObject()
+local QBCore = exports['qbr-core']:GetCoreObject()
 local camZPlus1 = 1500
 local camZPlus2 = 50
 local pointCamCoords = 75
@@ -8,8 +8,8 @@ local cam2Time = 1000
 local choosingSpawn = false
 local newPlayer = false
 
-RegisterNetEvent('qb-spawn:client:openUI')
-AddEventHandler('qb-spawn:client:openUI', function(value)
+RegisterNetEvent('qbr-spawn:client:openUI')
+AddEventHandler('qbr-spawn:client:openUI', function(value)
     SetEntityVisible(PlayerPedId(), false)
     DoScreenFadeOut(250)
     Citizen.Wait(1000)
@@ -152,11 +152,11 @@ RegisterNUICallback('spawnplayer', function(data)
 
         -- if insideMeta.house ~= nil then
         --     local houseId = insideMeta.house
-        --     TriggerEvent('qb-houses:client:LastLocationHouse', houseId)
+        --     TriggerEvent('qbr-houses:client:LastLocationHouse', houseId)
         -- elseif insideMeta.apartment.apartmentType ~= nil or insideMeta.apartment.apartmentId ~= nil then
         --     local apartmentType = insideMeta.apartment.apartmentType
         --     local apartmentId = insideMeta.apartment.apartmentId
-        --     TriggerEvent('qb-apartments:client:LastLocationHouse', apartmentType, apartmentId)
+        --     TriggerEvent('qbr-apartments:client:LastLocationHouse', apartmentType, apartmentId)
         -- end
         TriggerServerEvent('QBCore:Server:OnPlayerLoaded')
         TriggerEvent('QBCore:Client:OnPlayerLoaded')
@@ -173,11 +173,11 @@ RegisterNUICallback('spawnplayer', function(data)
         SetDisplay(false)
         DoScreenFadeOut(500)
         Citizen.Wait(2000)
-        TriggerEvent('qb-houses:client:enterOwnedHouse', location)
+        TriggerEvent('qbr-houses:client:enterOwnedHouse', location)
         TriggerServerEvent('QBCore:Server:OnPlayerLoaded')
         TriggerEvent('QBCore:Client:OnPlayerLoaded')
-        TriggerServerEvent('qb-houses:server:SetInsideMeta', 0, false)
-        TriggerServerEvent('qb-apartments:server:SetInsideMeta', 0, 0, false)
+        TriggerServerEvent('qbr-houses:server:SetInsideMeta', 0, false)
+        TriggerServerEvent('qbr-apartments:server:SetInsideMeta', 0, 0, false)
         FreezeEntityPosition(ped, false)
         RenderScriptCams(false, true, 500, true, true)
         SetCamActive(cam, false)
@@ -195,8 +195,8 @@ RegisterNUICallback('spawnplayer', function(data)
         SetEntityCoords(ped, pos.x, pos.y, pos.z)
         TriggerServerEvent('QBCore:Server:OnPlayerLoaded')
         TriggerEvent('QBCore:Client:OnPlayerLoaded')
-        TriggerServerEvent('qb-houses:server:SetInsideMeta', 0, false)
-        TriggerServerEvent('qb-apartments:server:SetInsideMeta', 0, 0, false)
+        TriggerServerEvent('qbr-houses:server:SetInsideMeta', 0, false)
+        TriggerServerEvent('qbr-apartments:server:SetInsideMeta', 0, 0, false)
         Citizen.Wait(500)
         SetEntityCoords(ped, pos.x, pos.y, pos.z)
         SetEntityHeading(ped, pos.h)
@@ -233,35 +233,35 @@ Citizen.CreateThread(function()
     end
 end)
 
-RegisterNetEvent('qb-houses:client:setHouseConfig')
-AddEventHandler('qb-houses:client:setHouseConfig', function(houseConfig)
+RegisterNetEvent('qbr-houses:client:setHouseConfig')
+AddEventHandler('qbr-houses:client:setHouseConfig', function(houseConfig)
     Config.Houses = houseConfig
 end)
 
-RegisterNetEvent('qb-spawn:client:setupSpawnUI')
-AddEventHandler('qb-spawn:client:setupSpawnUI', function(cData, new)
+RegisterNetEvent('qbr-spawn:client:setupSpawnUI')
+AddEventHandler('qbr-spawn:client:setupSpawnUI', function(cData, new)
     if QB.EnableApartments then
         QBCore.Functions.TriggerCallback('apartments:GetOwnedApartment', function(result)
             if result ~= nil then
-                TriggerEvent('qb-spawn:client:setupSpawns', cData, false, nil)
-                TriggerEvent('qb-spawn:client:openUI', true)
+                TriggerEvent('qbr-spawn:client:setupSpawns', cData, false, nil)
+                TriggerEvent('qbr-spawn:client:openUI', true)
                 TriggerEvent("apartments:client:SetHomeBlip", result.type)
             else
-                TriggerEvent('qb-spawn:client:setupSpawns', cData, true, Apartments.Locations)
-                TriggerEvent('qb-spawn:client:openUI', true)
+                TriggerEvent('qbr-spawn:client:setupSpawns', cData, true, Apartments.Locations)
+                TriggerEvent('qbr-spawn:client:openUI', true)
             end
         end, cData.citizenid)
     else
-        TriggerEvent('qb-spawn:client:setupSpawns', cData, new, nil)
-        TriggerEvent('qb-spawn:client:openUI', true)
+        TriggerEvent('qbr-spawn:client:setupSpawns', cData, new, nil)
+        TriggerEvent('qbr-spawn:client:openUI', true)
     end
 end)
 
-RegisterNetEvent('qb-spawn:client:setupSpawns')
-AddEventHandler('qb-spawn:client:setupSpawns', function(cData, new, apps)
+RegisterNetEvent('qbr-spawn:client:setupSpawns')
+AddEventHandler('qbr-spawn:client:setupSpawns', function(cData, new, apps)
     if not new then
         if QB.EnableHouses then
-            QBCore.Functions.TriggerCallback('qb-spawn:server:getOwnedHouses', function(houses)
+            QBCore.Functions.TriggerCallback('qbr-spawn:server:getOwnedHouses', function(houses)
                 local myHouses = {}
                 if houses ~= nil then
                     for i = 1, (#houses), 1 do

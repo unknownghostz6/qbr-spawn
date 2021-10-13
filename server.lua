@@ -25,11 +25,11 @@ Citizen.CreateThread(function()
 			}
 		end
 	end
-	TriggerClientEvent("qb-garages:client:houseGarageConfig", -1, HouseGarages)
-	TriggerClientEvent("qb-houses:client:setHouseConfig", -1, Config.Houses)
+	TriggerClientEvent("qbr-garages:client:houseGarageConfig", -1, HouseGarages)
+	TriggerClientEvent("qbr-houses:client:setHouseConfig", -1, Config.Houses)
 end)
 
-QBCore.Functions.CreateCallback('qb-spawn:server:getOwnedHouses', function(source, cb, cid)
+QBCore.Functions.CreateCallback('qbr-spawn:server:getOwnedHouses', function(source, cb, cid)
 	if cid ~= nil then
 		local houses = exports.ghmattimysql:executeSync('SELECT * FROM player_houses WHERE citizenid=@citizenid', {['@citizenid'] = cid})
 		if houses[1] ~= nil then
