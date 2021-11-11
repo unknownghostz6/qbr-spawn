@@ -27,10 +27,7 @@ QB.Spawns = {
         },
         location = "rhodesst",
         label = "Rhodes Sheriff Station",
-    }
-}
-
-QB.DefaultSpawn = {
+    },
     ["default"] = {
         coords = {
             x = 2556.46,
@@ -42,5 +39,3 @@ QB.DefaultSpawn = {
         label = "Default Spawn"
     }
 }
-
-
