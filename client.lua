@@ -142,7 +142,7 @@ RegisterNUICallback('spawnplayer', function(data)
         DoScreenFadeOut(500)
         Wait(2000)
         SetEntityCoords(PlayerPedId(), PlayerData.position.x, PlayerData.position.y, PlayerData.position.z)
-        SetEntityHeading(PlayerPedId(), PlayerData.position.a)
+        SetEntityHeading(PlayerPedId(), PlayerData.position.w)
         FreezeEntityPosition(PlayerPedId(), false)
 
         -- if insideMeta.house ~= nil then
