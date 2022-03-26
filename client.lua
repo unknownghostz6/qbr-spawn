@@ -1,4 +1,3 @@
-local QBCore = exports['qbr-core']:GetCoreObject()
 local camZPlus1 = 1500
 local camZPlus2 = 50
 local pointCamCoords = 75
@@ -13,7 +12,7 @@ RegisterNetEvent('qbr-spawn:client:openUI', function(value)
     DoScreenFadeOut(250)
     Wait(1000)
     DoScreenFadeIn(250)
-    QBCore.Functions.GetPlayerData(function(PlayerData)
+    exports['qbr-core']:GetPlayerData(function(PlayerData)
         cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", PlayerData.position.x, PlayerData.position.y, PlayerData.position.z + camZPlus1, -85.00, 0.00, 0.00, 100.00, false, 0)
         SetCamActive(cam, true)
         RenderScriptCams(true, false, 1, true, true)
@@ -51,7 +50,7 @@ RegisterNUICallback('setCam', function(data)
     end
 
     if type == "current" then
-        QBCore.Functions.GetPlayerData(function(PlayerData)
+        exports['qbr-core']:GetPlayerData(function(PlayerData)
             cam2 = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", PlayerData.position.x, PlayerData.position.y, PlayerData.position.z + camZPlus1, 300.00,0.00,0.00, 110.00, false, 0)
             PointCamAtCoord(cam2, PlayerData.position.x, PlayerData.position.y, PlayerData.position.z + pointCamCoords)
             SetCamActiveWithInterp(cam2, cam, cam1Time, true, true)
@@ -135,7 +134,7 @@ RegisterNUICallback('spawnplayer', function(data)
     local location = tostring(data.spawnloc)
     local type = tostring(data.typeLoc)
     local ped = PlayerPedId()
-    local PlayerData = QBCore.Functions.GetPlayerData()
+    local PlayerData = exports['qbr-core']:GetPlayerData()
     local insideMeta = PlayerData.metadata['inside']
     if type == "current" then
         SetDisplay(false)
@@ -238,7 +237,7 @@ end)
 
 RegisterNetEvent('qbr-spawn:client:setupSpawnUI', function(cData, new)
     if QB.EnableApartments then
-        QBCore.Functions.TriggerCallback('apartments:GetOwnedApartment', function(result)
+        exports['qbr-core']:TriggerCallback('apartments:GetOwnedApartment', function(result)
             if result ~= nil then
                 TriggerEvent('qbr-spawn:client:setupSpawns', cData, false, nil)
                 TriggerEvent('qbr-spawn:client:openUI', true)
@@ -258,7 +257,7 @@ RegisterNetEvent('qbr-spawn:client:setupSpawns', function(cData, new, apps)
     newPlayer = new
     if not new then
         if QB.EnableHouses then
-            QBCore.Functions.TriggerCallback('qbr-spawn:server:getOwnedHouses', function(houses)
+            exports['qbr-core']:TriggerCallback('qbr-spawn:server:getOwnedHouses', function(houses)
                 local myHouses = {}
                 if houses ~= nil then
                     for i = 1, (#houses), 1 do
